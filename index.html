@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hase wird 50</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --cream: #f5f0e8;
+      --warm-white: #fdfaf5;
+      --sand: #e8dcc8;
+      --terracotta: #c4785a;
+      --deep-brown: #2c1f14;
+      --gold: #b8975a;
+      --text: #2c1f14;
+      --text-light: #6b5744;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background-color: var(--cream);
+      color: var(--text);
+      font-family: 'Lato', sans-serif;
+      font-weight: 300;
+      overflow-x: hidden;
+    }
+
+    /* HEADER */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 2rem;
+      background: linear-gradient(160deg, #f5f0e8 0%, #ede4d3 50%, #e2d4bc 100%);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(ellipse at 60% 40%, rgba(196, 120, 90, 0.08) 0%, transparent 60%),
+                  radial-gradient(ellipse at 30% 70%, rgba(184, 151, 90, 0.06) 0%, transparent 50%);
+      pointer-events: none;
+    }
+
+    .hero-subtitle {
+      font-family: 'Lato', sans-serif;
+      font-weight: 300;
+      font-size: clamp(0.75rem, 2vw, 0.9rem);
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--terracotta);
+      margin-bottom: 1.5rem;
+      opacity: 0;
+      animation: fadeUp 1s ease forwards 0.3s;
+    }
+
+    .hero-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(3.5rem, 10vw, 8rem);
+      font-weight: 400;
+      line-height: 1;
+      color: var(--deep-brown);
+      letter-spacing: -0.02em;
+      opacity: 0;
+      animation: fadeUp 1.2s ease forwards 0.6s;
+    }
+
+    .hero-title em {
+      font-style: italic;
+      color: var(--terracotta);
+    }
+
+    .hero-divider {
+      width: 60px;
+      height: 1px;
+      background: var(--gold);
+      margin: 2.5rem auto;
+      opacity: 0;
+      animation: fadeUp 1s ease forwards 1s;
+    }
+
+    .hero-tagline {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: clamp(1rem, 2.5vw, 1.3rem);
+      color: var(--text-light);
+      max-width: 480px;
+      line-height: 1.7;
+      opacity: 0;
+      animation: fadeUp 1s ease forwards 1.2s;
+    }
+
+    .scroll-hint {
+      position: absolute;
+      bottom: 2.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      opacity: 0;
+      animation: fadeUp 1s ease forwards 1.8s;
+    }
+
+    .scroll-hint span {
+      font-size: 0.7rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--text-light);
+    }
+
+    .scroll-arrow {
+      width: 1px;
+      height: 40px;
+      background: linear-gradient(to bottom, var(--gold), transparent);
+      animation: scrollPulse 2s ease-in-out infinite;
+    }
+
+    /* ENTRIES */
+    .entries {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 4rem 2rem 8rem;
+    }
+
+    .entry {
+      margin-bottom: 8rem;
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+
+    .entry.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .entry-number {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 0.8rem;
+      color: var(--gold);
+      letter-spacing: 0.2em;
+      margin-bottom: 1.2rem;
+      display: block;
+    }
+
+    .entry-image {
+      width: 100%;
+      aspect-ratio: 4/3;
+      object-fit: cover;
+      display: block;
+      filter: sepia(8%) contrast(1.05) brightness(1.02);
+      transition: filter 0.4s ease;
+    }
+
+    .entry-image:hover {
+      filter: sepia(0%) contrast(1.08) brightness(1.04);
+    }
+
+    .entry-image-portrait {
+      aspect-ratio: 3/4;
+    }
+
+    .entry-text {
+      padding: 2rem 0 0;
+      border-top: 1px solid var(--sand);
+      margin-top: 0;
+    }
+
+    .entry-text p {
+      font-family: 'Lato', sans-serif;
+      font-weight: 300;
+      font-size: clamp(0.95rem, 2vw, 1.05rem);
+      line-height: 1.85;
+      color: var(--text);
+      max-width: 640px;
+    }
+
+    .entry-text p em {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      color: var(--terracotta);
+    }
+
+    /* FINAL MESSAGE */
+    .finale {
+      text-align: center;
+      padding: 6rem 2rem 10rem;
+      background: linear-gradient(to bottom, var(--cream), var(--warm-white));
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+
+    .finale.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .finale-divider {
+      width: 40px;
+      height: 1px;
+      background: var(--gold);
+      margin: 0 auto 3rem;
+    }
+
+    .finale-text {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: clamp(1.4rem, 4vw, 2.2rem);
+      color: var(--deep-brown);
+      line-height: 1.5;
+      max-width: 560px;
+      margin: 0 auto 1.5rem;
+    }
+
+    .finale-sig {
+      font-family: 'Lato', sans-serif;
+      font-weight: 300;
+      font-size: 0.85rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--terracotta);
+      margin-top: 2rem;
+    }
+
+    /* ANIMATIONS */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes scrollPulse {
+      0%, 100% { opacity: 0.3; transform: scaleY(1); }
+      50%       { opacity: 1;   transform: scaleY(1.1); }
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 600px) {
+      .entries { padding: 3rem 1.2rem 6rem; }
+      .entry   { margin-bottom: 5rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HERO -->
+  <header class="hero">
+    <p class="hero-subtitle">Teneriffa &nbsp;·&nbsp; Erinnerungen &nbsp;·&nbsp; Von Frauke</p>
+    <h1 class="hero-title">Hase<br><em>wird 50</em></h1>
+    <div class="hero-divider"></div>
+    <p class="hero-tagline">Ein kleines Bilderbuch. Für dich. Weil du es verdienst.</p>
+    <div class="scroll-hint">
+      <span>scroll</span>
+      <div class="scroll-arrow"></div>
+    </div>
+  </header>
+
+  <!-- ENTRIES -->
+  <main class="entries">
+
+    <!-- Bild 01 -->
+    <article class="entry">
+      <span class="entry-number">01</span>
+      <img class="entry-image" src="bilder/Tenerife0801.jpg" alt="Gunna am Strand">
+      <div class="entry-text">
+        <p>Gunna geht immer ein bisschen schneller als alle anderen. Nicht weil sie es eilig hat – sondern weil ihr Kopf schon drei Schritte weiter ist. Auf diesem Strand auf Teneriffa nahm sie sich ihre fünf Minuten allein. Rolling Stones im Ohr, das Meer auf der linken Seite, und ein ganzes Jahr Sturm hinter sich. Sie ist an die Küste gezogen. Sie ist angekommen.</p>
+      </div>
+    </article>
+
+    <!-- Bild 02 -->
+    <article class="entry">
+      <span class="entry-number">02</span>
+      <img class="entry-image" src="bilder/Tenerife0802.jpg" alt="Gunna im Kleid">
+      <div class="entry-text">
+        <p>Marilyn Monroe besaß über 400 Bücher – die meisten Leute waren verblüfft. Gunna nicht. Die beiden hätten sich verstanden. Und was das Kleid angeht: Marilyn hatte den Lüftungsschacht am Broadway. Gunna hat Teneriffa. Beide wissen, wie man einen Auftritt macht.</p>
+      </div>
+    </article>
+
+    <!-- Bild 03 -->
+    <article class="entry">
+      <span class="entry-number">03</span>
+      <img class="entry-image" src="bilder/Tenerife0803.jpg" alt="Gunna und Frauke im Hotelzimmer">
+      <div class="entry-text">
+        <p>Billy Wilder wusste: Komödie funktioniert nur, wenn man sie ernst nimmt. Keine Ironie, keine halben Sachen – echte Freude, gespielt mit vollem Einsatz. Gunna und Frauke im Hotelzimmer, zwei Kleider, Rücken an Rücken. <em>Manche mögen's heiß.</em> Kein Regisseur nötig. Die Chemie war schon da. Zwei Kleider, Rücken an Rücken, dieser Blick. Unvergesslich.</p>
+      </div>
+    </article>
+
+    <!-- Bild 04 -->
+    <article class="entry">
+      <span class="entry-number">04</span>
+      <img class="entry-image" src="bilder/Tenerife0804.jpg" alt="Mondlandschaft am Teide">
+      <div class="entry-text">
+        <p>Scotty hat sie runtergebeamt. Auftrag unklar, Landschaft fremd, kein Plan. Aber Gunna steht da – ruhig, geerdet, als gehöre sie genau dorthin. Kirk war nie anders.</p>
+      </div>
+    </article>
+
+    <!-- Bild 08 -->
+    <article class="entry">
+      <span class="entry-number">05</span>
+      <img class="entry-image" src="bilder/Tenerife0808.jpg" alt="Selfie auf der Dachterrasse">
+      <div class="entry-text">
+        <p>Manche Freundschaften sind einfach so – man weiß nicht mehr genau, wann sie angefangen haben, und man kann sich nicht mehr vorstellen, wie es vorher war. Gunna ist so eine Freundin. Die, die man anruft. Die, die versteht. Dachterrasse, Sonnenuntergang, Teneriffa. Fünfzig Jahre – und noch lange nicht fertig.</p>
+      </div>
+    </article>
+
+    <!-- Bild 09 -->
+    <article class="entry">
+      <span class="entry-number">06</span>
+      <img class="entry-image" src="bilder/Tenerife0809.jpg" alt="Gunna mit ausgestreckten Armen am Meer">
+      <div class="entry-text">
+        <p>Arme weit ausgestreckt, Blick aufs Meer, fast nur Silhouette gegen das flimmernde Licht. Man weiß nicht, ob sie das Meer begrüßt oder einfach in Empfang nimmt – als gehöre es ihr. Beides wäre möglich. Gunna steht so: ruhig und gleichzeitig voller Energie, geerdet und gleichzeitig weit weg. Präsenz, die man spürt, ohne sie erklären zu können.</p>
+      </div>
+    </article>
+
+    <!-- Bild 10 -->
+    <article class="entry">
+      <span class="entry-number">07</span>
+      <img class="entry-image" src="bilder/Tenerife0810.jpg" alt="Gunna und Frauke aneinandergelehnt">
+      <div class="entry-text">
+        <p>Zwei Blonde, Köpfe aneinandergelehnt, eine Silhouette wie ein Dreieck gegen Meer und Himmel. Gunnas Kopf an Fraukes Schulter. Man sieht es sofort: diese zwei kennen sich. Nicht seit gestern. Die Art, wie man sich anlehnt, wenn man weiß, dass da jemand steht. Immer.</p>
+      </div>
+    </article>
+
+    <!-- Bild 11 -->
+    <article class="entry">
+      <span class="entry-number">08</span>
+      <img class="entry-image entry-image-portrait" src="bilder/Tenerife0811.jpg" alt="Portrait Gunna">
+      <div class="entry-text">
+        <p>Letzter Abend. Das Licht auf ihrem Gesicht, dahinter Schwärze. Gunnas Blick – glänzend, anmutig, ein leises Lächeln. Freundlichkeit, Humor, Leuchten: das alles steckt darin. Und es könnte heute sein. Bei manchen Menschen ändert sich das Wesentliche einfach nicht.</p>
+      </div>
+    </article>
+
+    <!-- Bild 12 -->
+    <article class="entry">
+      <span class="entry-number">09</span>
+      <img class="entry-image entry-image-portrait" src="bilder/Tenerife0812.jpg" alt="Portrait Frauke">
+      <div class="entry-text">
+        <p>Frauke lächelt breit in die Kamera – offen, warm, ein etwas abwesender Blick in den Augen. Gunna lacht: <em>„Du siehst aus wie Helge."</em> Und damit hat sie natürlich wie immer auch recht.</p>
+      </div>
+    </article>
+
+    <!-- Bild 13 -->
+    <article class="entry">
+      <span class="entry-number">10</span>
+      <img class="entry-image" src="bilder/Tenerife0813.jpg" alt="Balkon mit Rotwein und Zigaretten">
+      <div class="entry-text">
+        <p>Ein Tisch, vollgerümpelt. Aschenbecher, Zigaretten, Rotwein, Chips, eine Wasserflasche. Fraukes nackte Füße mittendrin. <em>„Summertime"</em> von Janis Joplin läuft im Hintergrund – oder sollte es zumindest. Diese Nacht auf dem Balkon, diese Wärme, dieses Lachen. Wir rauchen nicht mehr. Aber damals war auch das ein Ausdruck von Leben und Augenblick. Es klingt mit, wenn man das Bild ansieht.</p>
+      </div>
+    </article>
+
+  </main>
+
+  <!-- FINALE -->
+  <footer class="finale">
+    <div class="finale-divider"></div>
+    <p class="finale-text">Alles Gute zum Geburtstag, Hase.<br>Auf die nächsten fünfzig.</p>
+    <p class="finale-sig">In Liebe &nbsp;·&nbsp; Frauke</p>
+  </footer>
+
+  <script>
+    // Scroll-triggered fade-in
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.entry, .finale').forEach(el => observer.observe(el));
+  </script>
+
+</body>
+</html>
